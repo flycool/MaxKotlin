@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.kotlin.maxkotlin"
+        minSdkVersion 24
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "apiBaseUrl", "\"https://ws.audioscrobbler.com/2.0/\""
+        buildConfigField "String", "apiToken", "\"70696db59158cb100370ad30a7a705c1\""
+
+        buildConfigField "String[]", "FEATURE_MODULE_NAMES",
+                "{" +
+                "\"feature_alum\"" +
+                "}"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    dynamicFeatures = [':feature_alum']
+}
+
+dependencies {
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+
+    api project(path: ':library_base')
+
+    implementation("com.squareup.okhttp3:okhttp:$ok_http")
+
+    implementation("com.squareup.okhttp3:logging-interceptor:$ok_http")
+    implementation("com.google.android.play:core:$play_core")
+    implementation("com.facebook.stetho:stetho:$stetho")
+    implementation("com.facebook.stetho:stetho-okhttp3:$stetho")
+
+    api("com.squareup.retrofit2:retrofit:$retrofit")
+    api("com.squareup.retrofit2:converter-moshi:$retrofit")
+    api("androidx.coordinatorlayout:coordinatorlayout:$coordinator_layout")
+    api("androidx.recyclerview:recyclerview:$recycler_view")
+    api("androidx.fragment:fragment-ktx:$fragment_ktx")
+    api('com.pawegio.kandroid:kandroid:0.8.7@aar')
+    api("com.airbnb.android:lottie:$lottie")
+
+
+}

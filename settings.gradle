@@ -1,0 +1,4 @@
+include ':feature_alum'
+include ':library_base'
+include ':app'
+rootProject.name = "MaxKotlin"

@@ -1,0 +1,32 @@
+package com.kotliin.maxkotlin.feature_alum.domain.usecase
+
+import com.kotliin.maxkotlin.feature_alum.domain.model.AlbumDomainModel
+import com.kotliin.maxkotlin.feature_alum.domain.repository.AlbumRepository
+import java.io.IOException
+
+/**
+ * create by max at 2020/10/3 15:51
+ *
+ */
+
+internal class GetAlbumUseCase(
+    private val albumRepository: AlbumRepository
+) {
+    sealed class Result {
+        data class Success(val data: AlbumDomainModel) : Result()
+        data class Error(val e: Throwable) : Result()
+    }
+
+    suspend fun execute(
+        artistName: String,
+        albumName: String,
+        mbId: String?
+    ): Result = try {
+        albumRepository.getAlbumInfo(artistName, albumName, mbId)?.let {
+            Result.Success(it)
+        } ?: Result.Error(RuntimeException("No data"))
+    } catch (e: IOException) {
+        Result.Error(e)
+    }
+
+}
